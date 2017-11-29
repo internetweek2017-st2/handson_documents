@@ -14,7 +14,7 @@
 ### (10min) ハンズオンの説明 (担当: 杉本)
 - [スライド](https://github.com/internetweek2017-st2/handson_documents/blob/master/slide/iw2017-st2-01-intro.pdf)
 
-### (20min) Part 0. ハンズオン環境へのログイン・動作確認
+### (20min) ハンズオン Part 0. ハンズオン環境へのログイン・動作確認
 - [ハンズオン](https://github.com/internetweek2017-st2/handson_documents/wiki/Handson-Part-0)
 
 ### (25min) StackStorm 概要 (担当:大山)

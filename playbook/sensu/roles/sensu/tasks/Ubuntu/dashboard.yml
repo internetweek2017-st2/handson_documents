@@ -1,0 +1,33 @@
+---
+# tasks/Ubuntu/dashboard.yml: Deployment of the Uchiwa dashboard
+# Specific to Ubuntu
+
+  - include_vars: "{{ ansible_distribution }}.yml"
+
+  - name: Install Uchiwa
+    apt:
+      name: uchiwa
+      state: present
+
+  - name: Ensure Sensu SSL directory exists
+    file:
+      dest: "{{ sensu_config_path }}/ssl"
+      state: directory
+      owner: "{{ sensu_user_name }}"
+      group: "{{ sensu_group_name }}"
+    when: uchiwa_use_https
+
+  - name: Generate SSL certificate for Uchiwa
+    command: >
+      openssl req -x509 -nodes -subj '/CN=uchiwa' -days 3650 -newkey rsa:2048
+      -keyout {{ sensu_config_path }}/ssl/uchiwa.key.pem
+      -out {{ sensu_config_path }}/ssl/uchiwa.crt.pem
+    args:
+      creates: "{{ sensu_config_path }}/ssl/uchiwa.crt.pem"
+    when: uchiwa_use_https
+
+  - name: Deploy Uchiwa config
+    template:
+      src: uchiwa_config.json.j2
+      dest: "{{ sensu_config_path }}/uchiwa.json"
+    notify: restart uchiwa service

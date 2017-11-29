@@ -1,0 +1,7 @@
+# trash files for vim
+.*sw[p-z]
+# trash files for ansible
+playbook/*/data
+playbook/*/host*
+playbook/*/*.retry
+/.vagrant

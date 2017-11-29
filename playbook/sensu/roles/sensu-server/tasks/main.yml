@@ -1,0 +1,32 @@
+---
+- name: set Sensu Check configurations
+  template:
+    src: templates/{{ item }}
+    dest: /{{ item }}
+  with_items:
+    - etc/sensu/conf.d/mock_check_server.json
+    - etc/sensu/conf.d/rabbitmq.json
+    - etc/sensu/conf.d/st2.json
+    - etc/sensu/conf.d/handler_st2.json
+    - etc/sensu/conf.d/check_SRX_ipv4.json
+    - etc/sensu/conf.d/check_SRX_ipv6.json
+
+- name: set IPv6 address to the NIC to monitor the BGP peering session
+  template:
+    src: templates/etc/network/interfaces.d/intf
+    dest: /etc/network/interfaces.d/{{ item }}
+  when: hostvars[inventory_hostname]['ansible_%s' % item].ipv4.address == monitor_ipv4
+  with_items: "{{ ansible_interfaces }}"
+
+- name: add static routing for BGP peering monitoring
+  template:
+    src: templates/etc/network/if-up.d/static-routes
+    dest: /etc/network/if-up.d/static-routes
+    mode: 0755
+  when: hostvars[inventory_hostname]['ansible_%s' % item].ipv4.address == monitor_ipv4
+  with_items: "{{ ansible_interfaces }}"
+
+- name: run ifdown and ifup to apply changes
+  shell: ifdown --force --ignore-errors {{ item }} && ifup {{ item }}
+  when: hostvars[inventory_hostname]['ansible_%s' % item].ipv4.address == monitor_ipv4
+  with_items: "{{ ansible_interfaces }}"

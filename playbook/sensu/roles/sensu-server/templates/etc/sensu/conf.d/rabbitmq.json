@@ -1,0 +1,9 @@
+{
+  "rabbitmq": {
+    "host": "{{ inventory_hostname }}",
+    "port": 5672,
+    "vhost": "/",
+    "user": "guest",
+    "password": "guest"
+  }
+}

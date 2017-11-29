@@ -1,0 +1,4 @@
+configure
+load merge initial_config
+show | compare
+commit and-quit

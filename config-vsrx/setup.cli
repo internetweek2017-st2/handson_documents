@@ -1,0 +1,5 @@
+configure
+save default_config
+load patch /cf/root/setup.patch
+save initial_config
+commit and-quit

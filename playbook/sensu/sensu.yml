@@ -1,0 +1,23 @@
+---
+- hosts: sensu
+  become: yes
+  vars:
+    - redis_bind: 127.0.0.1
+    - rabbitmq_config_ha: false
+    - rabbitmq_enable_clustering: false
+    - sensu_master: true
+    - sensu_include_dashboard: true
+    - sensu_remote_plugins:
+      - stackstorm
+    - sensu_ssl_gen_certs: false
+    - sensu_ssl_manage_certs: false
+    - uchiwa_users:
+      - username: "{{ sensu_username | default('username') }}"
+        password: "{{ sensu_password | default('password') }}"
+    - uchiwa_use_https: true
+  roles:
+    - rabbitmq
+    - DavidWittman.redis
+    - sensu
+    - sensu-server
+    - sensu-client

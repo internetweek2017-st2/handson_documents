@@ -1,0 +1,61 @@
+---
+- name: Check if enterprise is installed
+  become: yes
+  stat:
+    path: /opt/stackstorm/static/webui/flow/
+  register: bwc_installed
+
+# For enterprise 'bwc-ui' replaces 'st2web' package
+- name: "Decide which package to use: 'st2web' vs 'bwc-ui'"
+  set_fact:
+    st2web_package_name: bwc-ui
+  when: bwc_installed.stat.exists
+
+- name: Install latest {{ st2web_package_name }} package, auto-update
+  become: yes
+  package:
+    name: "{{ st2web_package_name }}"
+    state: latest
+  when: st2_version == "latest"
+  tags: st2web, skip_ansible_lint
+
+- name: Install present {{ st2web_package_name }} package, no auto-update
+  become: yes
+  package:
+    name: "{{ st2web_package_name }}"
+    state: present
+  when: st2_version == "present"
+  tags: st2web
+
+- name: Install pinned {{ st2web_package_name }} package
+  become: yes
+  package:
+    name: "{{ st2web_package_name }}{{ '-' if ansible_pkg_mgr == 'yum' else '=' }}{{ st2_version }}-{{ st2web_revision }}"
+    state: present
+  when:
+    - st2_version != "latest"
+    - st2_version != "present"
+  tags: st2web
+
+- name: Configure SSL certificate for st2web UI
+  include: certificate.yml
+  tags: st2web, certificate
+
+- name: Copy Nginx config
+  become: yes
+  command: cp /usr/share/doc/st2/conf/nginx/st2.conf /etc/nginx/sites-available/
+  args:
+    creates: /etc/nginx/sites-available/st2.conf
+  notify:
+    - restart nginx
+  tags: st2web
+
+- name: Enable site
+  become: yes
+  file:
+    state: link
+    src: /etc/nginx/sites-available/st2.conf
+    dest: /etc/nginx/sites-enabled/st2.conf
+  notify:
+    - restart nginx
+  tags: st2web

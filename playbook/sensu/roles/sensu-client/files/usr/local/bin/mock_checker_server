@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# This is a mock checker script for server. This only raises system error.
+echo 'A system error is occurred (error code: 123)'
+
+exit 2

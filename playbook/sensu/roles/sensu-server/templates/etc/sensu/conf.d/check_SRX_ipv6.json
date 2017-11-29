@@ -1,0 +1,11 @@
+{
+  "checks": {
+    "check_SRX_inet6": {
+      "command": "/usr/lib/nagios/plugins/check_ping -6 -H {{ monitor_target_ipv6 }} -w 500,10% -c 1000,25%",
+      "interval": {{ check_interval | default(30) }},
+      "subscribers": ["SRX"],
+      "handlers": ["st2"]
+    }
+  }
+}
+

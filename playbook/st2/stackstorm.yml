@@ -1,0 +1,15 @@
+---
+- name: Install st2
+  hosts: st2 
+  roles:
+    - mongodb
+    - rabbitmq
+    - postgresql
+    - st2repo
+    - st2
+    - st2mistral
+    - nginx
+    - st2web
+    - nodejs
+    - st2smoketests
+    - add_key # for iw2017

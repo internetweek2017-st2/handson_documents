@@ -1,0 +1,8 @@
+- name: copy junos_key
+  become: true
+  copy:
+    src: files/junos
+    dest: /home/stanley/.ssh/id_ed25519
+    owner: stanley
+    group: stanley
+    mode: 0600

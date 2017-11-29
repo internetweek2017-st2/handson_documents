@@ -1,0 +1,9 @@
+{
+  "st2_handler": {
+    "st2_username": "{{ st2_username | default('st2admin') }}",
+    "st2_password": "{{ st2_password | default('passwd') }}",
+    "st2_api_key": "{{ st2_api_key | default('') }}",
+    "st2_api_base_url": "https://{{ st2_hostname | default('localhost') }}/api/v1/",
+    "st2_auth_base_url": "https://{{ st2_hostname | default('localhost') }}/auth/"
+  }
+}

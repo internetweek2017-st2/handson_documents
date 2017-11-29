@@ -1,0 +1,33 @@
+---
+- name: deploy the (mock) checker scripts
+  copy:
+    src: files/{{ item }}
+    dest: /{{ item }}
+    mode: u=rwx,g=rx,o=rx
+  with_items:
+    - usr/local/bin/mock_checker_server
+
+- name: make client configurationn
+  template:
+    src: templates/etc/sensu/conf.d/client.json
+    dest: /etc/sensu/conf.d/client.json
+  notify: restart sensu
+
+- name: prepare an execution environment for st2_handler.py
+  package: 
+    name: nagios-plugins-basic
+    state: latest
+
+- name: install pip
+  easy_install:
+    name: pip
+    state: present
+
+- name: install Python packages that st2_handler.py depents on
+  pip:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - requests
+    - pyyaml
+    - pysensu-ng

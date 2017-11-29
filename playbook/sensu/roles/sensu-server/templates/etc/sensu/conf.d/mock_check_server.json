@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check_mock": {
+      "command": "/usr/local/bin/mock_checker_server",
+      "interval": {{ check_interval | default(100) }},
+      "subscribers": ["server"],
+      "handlers": ["st2"]
+    }
+  }
+}

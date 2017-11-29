@@ -1,0 +1,15 @@
+{
+  "client": {
+    "name": "mock-client-{{ inventory_hostname }}",
+    "address": "{{ ansible_default_ipv4.address }}",
+    "environment": "development",
+    "subscriptions": [
+      "server",
+      "SRX"
+    ],
+    "socket": {
+      "bind": "{{ ansible_default_ipv4.address }}",
+      "port": 3030
+    }
+  }
+}

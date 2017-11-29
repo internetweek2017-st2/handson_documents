@@ -1,0 +1,8 @@
+{
+  "handlers": {
+    "st2": {
+      "type": "pipe",
+      "command": "/opt/sensu/embedded/bin/st2_handler.rb"
+    }
+  }
+}

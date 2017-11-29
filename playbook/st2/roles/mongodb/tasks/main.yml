@@ -1,0 +1,12 @@
+---
+- name: Install mongodb on {{ ansible_distribution }}
+  include: mongodb_{{ ansible_pkg_mgr }}.yml
+  tags: [databases, mongodb]
+
+- name: Start & Enable mongodb
+  become: yes
+  service:
+    name: mongod
+    state: started
+    enabled: yes
+  tags: [databases, mongodb]

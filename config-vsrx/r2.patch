@@ -1,0 +1,84 @@
+[edit system login]
++    user st2 {
++        uid 2001;
++        class super-user;
++        authentication {
++            encrypted-password "$1$4NUE9wGn$ejDc9nWlU6fJyjHrLVTry1"; ## SECRET-DATA
++        }
++    }
+[edit system login user vagrant]
+-     authentication {
+-         ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key"; ## SECRET-DATA
+-     }
+[edit system services ssh]
+-    root-login allow;
++    root-login deny-password;
+[edit interfaces ge-0/0/2 unit 0]
++    description peering_to_r1;
++    family inet6 {
++        address 2001:db8:1:12::102/64;
++    }
+[edit interfaces]
++   lo0 {
++       unit 0 {
++           family inet {
++               address 10.2.0.102/32;
++           }
++           family inet6 {
++               address 2001:db8:2::102/128;
++           }
++       }
++   }
+[edit]
++  routing-options {
++      rib inet.0 {
++          static {
++              route 10.2.0.0/16 discard;
++          }
++      }
++      rib inet6.0 {
++          static {
++              route 2001:db8:2::/48 discard;
++          }
++      }
++      router-id 10.2.0.102;
++      autonomous-system 65002;
++  }
++  protocols {
++      bgp {
++          group ebgp {
++              neighbor 10.1.12.101 {
++                  export advertise-my-prefixes;
++                  peer-as 65001;
++              }
++          }
++          group ebgp6 {
++              neighbor 2001:db8:1:12::101 {
++                  export advertise-my-prefixes6;
++                  peer-as 65001;
++              }
++          }
++      }
++  }
++  policy-options {
++      prefix-list my-prefixes {
++          10.2.0.0/16;
++      }
++      prefix-list my-prefixes6 {
++          2001:db8:2::/48;
++      }
++      policy-statement advertise-my-prefixes {
++          from {
++              protocol static;
++              prefix-list-filter my-prefixes exact;
++          }
++          then accept;
++      }
++      policy-statement advertise-my-prefixes6 {
++          from {
++              protocol static;
++              prefix-list-filter my-prefixes6 exact;
++          }
++          then accept;
++      }
++  }

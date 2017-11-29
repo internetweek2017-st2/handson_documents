@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ x"$IFACE" = x{{ item }} ] || exit 0
+
+if [ x"$ADDRFAM" = xinet ]; then
+  ip route add {{ monitor_nw_ipv4 }} via {{ monitor_gw_ipv4 }}
+elif [ x"$ADDRFAM" = xinet6 ]; then
+  ip route add {{ monitor_nw_ipv6 }} via {{ monitor_gw_ipv6 }}
+else
+  exit 0
+fi

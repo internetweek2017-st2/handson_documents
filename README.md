@@ -57,3 +57,6 @@
 
 ### (当日発表なし・資料のみ) Mistral の使用 (担当: 萬治)
 - [スライド](https://github.com/internetweek2017-st2/handson_documents/blob/master/slide/iw2017-st2-08-mistral.pdf)
+
+## アンケート回答(15:45-)
+- [こちら](https://questant.jp/q/iw2017-h3329)からアンケート回答をお願いします

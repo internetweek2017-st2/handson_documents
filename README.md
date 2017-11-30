@@ -44,11 +44,11 @@
 
 ### (5min) 休憩
 
-### (45min) ハンズオン Part4. WorkFlow による複雑なオペレーション
+### (40min) ハンズオン Part4. WorkFlow による複雑なオペレーション
 - [スライド](https://github.com/internetweek2017-st2/handson_documents/blob/master/slide/iw2017-st2-07-part4.pdf)
 - [ハンズオン](https://github.com/internetweek2017-st2/handson_documents/wiki/Handson-Part-4)
 
-## 14:55 - 15:45 (50min) ケーススタディ応用編
+## 14:50 - 15:40 (50min) ケーススタディ応用編
 ### (35min) 実運用例の紹介(AD 認証, 冗長構成, バージョンアップ) (担当: 大山)
 - [スライド](https://github.com/internetweek2017-st2/handson_documents/blob/master/slide/iw2017-st2-09-st2_advanced.pdf)
 
@@ -58,5 +58,5 @@
 ### (当日発表なし・資料のみ) Mistral の使用 (担当: 萬治)
 - [スライド](https://github.com/internetweek2017-st2/handson_documents/blob/master/slide/iw2017-st2-08-mistral.pdf)
 
-## アンケート回答(15:45-)
+## アンケート回答(15:40-15:45)
 - [こちら](https://questant.jp/q/iw2017-h3329)からアンケート回答をお願いします

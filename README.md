@@ -60,3 +60,26 @@
 
 ## アンケート回答(15:40-15:45)
 - [こちら](https://questant.jp/q/iw2017-h3329)からアンケート回答をお願いします
+
+# Vagrant を用いた環境構築方法について
+本ハンズオンでご利用頂いた環境は Vagrant を用いて作成されているため、以下の手順により同じ環境を構築可能です。
+
+## Vagrant インストール
+[Vagrant のサイト](https://www.vagrantup.com/) から最新版（2.0.1）をダウンロード・インストールして下さい。  
+※  `apt-get` 等でインストールすると version が古いため、サイトからダウンロード・インストールを行って下さい。  
+その後、以下のコマンドで Vagrant plugin のインストールを行って下さい。
+```
+$ vagrant plugin install vagrant-host-shell
+$ vagrant plugin install vagrant-junos
+```
+
+## VirtualBox のインストール
+[VirtualBox のサイト](https://www.virtualbox.org/wiki/Downloads)からダウンロード・インストールを行って下さい。  
+ubuntu 等の場合は `sudo apt-get install virtualbox` でインストール可能です。
+
+## Vagrant で VM を作成する
+```
+$ git clone https://github.com/internetweek2017-st2/handson_documents.git
+$ cd handson_documents
+$ vagrant up
+```
